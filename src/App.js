@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import AllGames from './pages/AllGames';
 import Game from './pages/Game';
 import Layout from './components/layout/Layout';
+import { db } from './firebase-config';
 
 const GAME_DATA=[
   {
@@ -14,6 +15,9 @@ const GAME_DATA=[
 ]
 
 function App() {
+  
+console.log(db)
+
   return (
       <Layout>
         <Routes>
