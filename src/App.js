@@ -1,27 +1,29 @@
 import { Route, Routes } from 'react-router-dom';
+import { useState, useEffect } from 'react'
 
 import AllGames from './pages/AllGames';
 import Game from './pages/Game';
 import Layout from './components/layout/Layout';
 import { db } from './firebase-config';
-
-const GAME_DATA=[
-  {
-      id: 'game1',
-      title: 'Renegade Platinum',
-      path: '/game/Renegade-Platinum',
-      image: 'https://i.imgur.com/viQMKJY.png'
-  }
-]
+import { collection, getDocs } from 'firebase/firestore'
 
 function App() {
-  
-console.log(db)
+  const [gameData, setGameData] = useState([])
+  const DB_DATA = collection(db, "games")
 
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getDocs(DB_DATA);
+      setGameData(data.docs.map((doc) => ({ ...doc.data()})))
+    };
+
+    getData();
+  }, []);
+  
   return (
       <Layout>
         <Routes>
-          <Route path='/' element={<AllGames games={GAME_DATA}/>}/>
+          <Route path='/' element={<AllGames games={gameData}/>}/>
           <Route path='/game/:name' element={<Game/>}/>
         </Routes>
       </Layout>

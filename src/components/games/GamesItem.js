@@ -19,5 +19,3 @@ export default function GamesItem(props){
 
     )
 }
-
-//GamesItem takes the props defined in GamesList and sets them to specific JSx elements which display the right type of information
